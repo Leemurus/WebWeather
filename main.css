@@ -7,6 +7,7 @@ html, body {
 }
 
 h1 {
+    font-size: 2.5em;
     color: #7d8c99;
 }
 
@@ -40,10 +41,10 @@ main {
     padding: 15px;
 }
 
-/* ========================================= Weather button ====================================== */
+/* ========================================= Round button ====================================== */
 
 
-.weather-button {
+.round-button {
     border-radius: 100%;
     width: 1.5em;
     height: 1.5em;
@@ -51,9 +52,15 @@ main {
     color: white;
     font-size: 1.5em;
     background-color: slategray;
+
+
+    /* For cross sign inside */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.weather-button:hover {
+.round-button:hover {
     background-color: #7d8c99;
 }
 
@@ -67,19 +74,22 @@ main {
 .full-weather-information li {
     display: flex;
     justify-content: space-between;
-    padding: 3px;
-    margin: 5px;
+    padding: 0.5vh;
+    margin: 1vh 0vh 1vh 0vh;
     background-color: darkgray;
     font-weight: bold;
 }
 
+.full-weather-information li * {
+    padding: 0.5vh;
+    font-size: 1em;
+}
+
 .full-weather-information li .key {
-    padding: 5px;
     color: white;
 }
 
 .full-weather-information li .value {
-    padding: 5px;
     color: #e5dede;
 }
 
@@ -97,10 +107,23 @@ main .top-container .refresh-geolocation {
     color: #585858;
     border: 0;
     border-radius: 5px;
-    font-size: 0.9em;
-    width: 15vw;
-    height: 5vh;
+    font-size: 1em;
+    width: 14vw;
+    padding: 10px;
+    height: fit-content;
     margin: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+main .top-container .refresh-geolocation .refresh-icon {
+    display: none;
+    background-image: url("assets/refresh.svg");
+    background-repeat: no-repeat;
+    height: 2vw;
+    width: 2vw;
 }
 
 main .top-container .refresh-geolocation:hover {
@@ -110,6 +133,8 @@ main .top-container .refresh-geolocation:hover {
 
 main .main-city-container {
     display: grid;
+    grid-column-gap: 2vw;
+    grid-row-gap: 2vh;
     grid-template-columns: repeat(2, 1fr);
 }
 
@@ -123,12 +148,12 @@ main .main-city-container .brief-weather-information .temperature-information {
 }
 
 main .main-city-container .brief-weather-information .temperature-information .weather-icon {
-    width: 7vw;
+    width: 8em;
 }
 
 main .main-city-container .brief-weather-information .temperature-information .temperature-number {
     color: #5b5f70;
-    font-size: 5vw;
+    font-size: 6em;
 }
 
 
@@ -161,22 +186,14 @@ main .favorite-cities-container .tools-container .add-favorite-city .add-city-fi
     padding-left: 5px;
 }
 
-main .favorite-cities-container .tools-container .add-favorite-city .add-city-button {
-
-}
-
-main .favorite-cities-container .tools-container .add-favorite-city .add-city-button:hover {
-
-}
-
-
 /* ================================================ FAVORITE CITIES ================================================ */
 
 
 main .favorite-cities-container .favorite-cities-list {
     display: grid;
+    grid-column-gap: 2vw;
+    grid-row-gap: 2vh;
     grid-template-columns: repeat(2, 1fr);
-    grid-column-gap: 20px;
 
     margin: 0;
     list-style: none;
@@ -184,17 +201,75 @@ main .favorite-cities-container .favorite-cities-list {
 }
 
 main .favorite-cities-container .favorite-cities-list li .brief-weather-information {
-    display: flex;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    grid-template-columns: 1fr 1fr 2fr 1fr;
+}
+
+main .favorite-cities-container .favorite-cities-list li .brief-weather-information .city-name {
+    margin: 0;
+}
+
+main .favorite-cities-container .favorite-cities-list li .brief-weather-information .temperature-number {
+    color: #5b5f70;
+    padding-left: 1vw;
+    font-size: 2em;
 }
 
 main .favorite-cities-container .favorite-cities-list li .brief-weather-information .weather-icon {
-    width: 10%;
+    padding-left: 1vw;
+    width: 2.5em;
 }
 
 main .favorite-cities-container .favorite-cities-list li .brief-weather-information .remove-city-button {
-    padding: 0;
-    margin: 0;
-    width: 2em;
-    height: 2em;
-    font-size: 1em;
+    transform: rotate(45deg);
+    justify-self: flex-end;
+}
+
+/* ================================================ Media requests ================================================ */
+
+@media (max-width: 1400px) {
+    /* Refresh button */
+    main .top-container {
+        grid-template-columns: repeat(2, 1fr);
+        justify-content: flex-start;
+    }
+
+    main .top-container .refresh-geolocation {
+        margin: auto 0;
+        width: fit-content;
+        height: fit-content;
+        justify-self: flex-start;
+    }
+
+    main .top-container .refresh-geolocation .refresh-text {
+        display: none;
+    }
+
+    main .top-container .refresh-geolocation .refresh-icon {
+        display: block;
+        height: 3vw;
+        width: 3vw;
+    }
+
+    /* Tools container */
+    main .favorite-cities-container .tools-container {
+        grid-template-columns: repeat(1, 1fr);
+        margin-bottom: 20px;
+    }
+
+    main .favorite-cities-container .tools-container .add-city-field {
+        width: 100%;
+    }
+
+    /* Main container */
+    main .main-city-container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    /* Favorite cities container */
+    main .favorite-cities-container .favorite-cities-list {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }
