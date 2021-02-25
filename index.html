@@ -5,11 +5,140 @@
     <title>Weather in St. Petersburg</title>
     <link rel="shortcut icon" href="assets/favicon.png" type="image/png">
     <link rel="stylesheet" href="main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter">
 </head>
 <body>
+
 <main>
-    <div class="container">
-        <p>Leemur</p>
+    <div class="top-container">
+        <h1>Погода здесь</h1>
+        <button class="refresh-geolocation">Обновить геолокацию</button>
+    </div>
+
+    <div class="main-city-container">
+        <div class="brief-weather-information">
+            <h2>Saint Petersburg</h2>
+            <div class="temperature-information">
+                <img src="assets/favicon.png" class="weather-icon" alt="Иконка погоды">
+                <span class="temperature-number">8&deg;C</span>
+            </div>
+        </div>
+        <ul class="full-weather-information">
+            <li><span class="key">Ветер</span> <span class="value">Moderate breeze, 6.0 m/s, North-northwest</span></li>
+            <li><span class="key">Облачность</span> <span class="value">Broken clouds</span></li>
+            <li><span class="key">Давление</span> <span class="value">1013 hpa</span></li>
+            <li><span class="key">Влажность</span> <span class="value">52%</span></li>
+            <li><span class="key">Координаты</span> <span class="value">[59.88, 30.42]</span></li>
+        </ul>
+    </div>
+
+    <div class="favorite-cities-container">
+        <div class="tools-container">
+            <h1>Избранное</h1>
+            <div class="add-favorite-city">
+                <input type="text" class="add-city-field" placeholder="Добавить новый город">
+                <button class="add-city-button weather-button">+</button>
+            </div>
+        </div>
+
+        <ul class="favorite-cities-list">
+            <li>
+                <div class="brief-weather-information">
+                    <h3>Moscow</h3>
+                    <span class="temperature-number">8&deg;C</span>
+                    <img src="assets/favicon.png" class="weather-icon" alt="Иконка погоды">
+                    <button class="remove-city-button weather-button">x</button>
+                </div>
+                <ul class="full-weather-information">
+                    <li><span class="key">Ветер</span> <span class="value">Moderate breeze, 6.0 m/s, North-northwest</span></li>
+                    <li><span class="key">Облачность</span> <span class="value">Broken clouds</span></li>
+                    <li><span class="key">Давление</span> <span class="value">1013 hpa</span></li>
+                    <li><span class="key">Влажность</span> <span class="value">52%</span></li>
+                    <li><span class="key">Координаты</span> <span class="value">[59.88, 30.42]</span></li>
+                </ul>
+            </li>
+
+            <li>
+                <div class="brief-weather-information">
+                    <h3>Helsinki</h3>
+                    <span class="temperature-number">8&deg;C</span>
+                    <img src="assets/favicon.png" class="weather-icon" alt="Иконка погоды">
+                    <button class="remove-city-button weather-button">x</button>
+                </div>
+                <ul class="full-weather-information">
+                    <li><span class="key">Ветер</span> <span class="value">Moderate breeze, 6.0 m/s, North-northwest</span></li>
+                    <li><span class="key">Облачность</span> <span class="value">Broken clouds</span></li>
+                    <li><span class="key">Давление</span> <span class="value">1013 hpa</span></li>
+                    <li><span class="key">Влажность</span> <span class="value">52%</span></li>
+                    <li><span class="key">Координаты</span> <span class="value">[59.88, 30.42]</span></li>
+                </ul>
+            </li>
+
+            <li>
+                <div class="brief-weather-information">
+                    <h3>Moscow</h3>
+                    <span class="temperature-number">8&deg;C</span>
+                    <img src="assets/favicon.png" class="weather-icon" alt="Иконка погоды">
+                    <button class="remove-city-button weather-button">x</button>
+                </div>
+                <ul class="full-weather-information">
+                    <li><span class="key">Ветер</span> <span class="value">Moderate breeze, 6.0 m/s, North-northwest</span></li>
+                    <li><span class="key">Облачность</span> <span class="value">Broken clouds</span></li>
+                    <li><span class="key">Давление</span> <span class="value">1013 hpa</span></li>
+                    <li><span class="key">Влажность</span> <span class="value">52%</span></li>
+                    <li><span class="key">Координаты</span> <span class="value">[59.88, 30.42]</span></li>
+                </ul>
+            </li>
+
+            <li>
+                <div class="brief-weather-information">
+                    <h3>Helsinki</h3>
+                    <span class="temperature-number">8&deg;C</span>
+                    <img src="assets/favicon.png" class="weather-icon" alt="Иконка погоды">
+                    <button class="remove-city-button weather-button">x</button>
+                </div>
+                <ul class="full-weather-information">
+                    <li><span class="key">Ветер</span> <span class="value">Moderate breeze, 6.0 m/s, North-northwest</span></li>
+                    <li><span class="key">Облачность</span> <span class="value">Broken clouds</span></li>
+                    <li><span class="key">Давление</span> <span class="value">1013 hpa</span></li>
+                    <li><span class="key">Влажность</span> <span class="value">52%</span></li>
+                    <li><span class="key">Координаты</span> <span class="value">[59.88, 30.42]</span></li>
+                </ul>
+            </li>
+
+            <li>
+                <div class="brief-weather-information">
+                    <h3>Moscow</h3>
+                    <span class="temperature-number">8&deg;C</span>
+                    <img src="assets/favicon.png" class="weather-icon" alt="Иконка погоды">
+                    <button class="remove-city-button weather-button">x</button>
+                </div>
+                <ul class="full-weather-information">
+                    <li><span class="key">Ветер</span> <span class="value">Moderate breeze, 6.0 m/s, North-northwest</span></li>
+                    <li><span class="key">Облачность</span> <span class="value">Broken clouds</span></li>
+                    <li><span class="key">Давление</span> <span class="value">1013 hpa</span></li>
+                    <li><span class="key">Влажность</span> <span class="value">52%</span></li>
+                    <li><span class="key">Координаты</span> <span class="value">[59.88, 30.42]</span></li>
+                </ul>
+            </li>
+
+            <li>
+                <div class="brief-weather-information">
+                    <h3>Helsinki</h3>
+                    <span class="temperature-number">8&deg;C</span>
+                    <img src="assets/favicon.png" class="weather-icon" alt="Иконка погоды">
+                    <button class="remove-city-button weather-button">x</button>
+                </div>
+                <ul class="full-weather-information">
+                    <li><span class="key">Ветер</span> <span class="value">Moderate breeze, 6.0 m/s, North-northwest</span></li>
+                    <li><span class="key">Облачность</span> <span class="value">Broken clouds</span></li>
+                    <li><span class="key">Давление</span> <span class="value">1013 hpa</span></li>
+                    <li><span class="key">Влажность</span> <span class="value">52%</span></li>
+                    <li><span class="key">Координаты</span> <span class="value">[59.88, 30.42]</span></li>
+                </ul>
+            </li>
+        </ul>
     </div>
 </main>
 

@@ -2,21 +2,199 @@ html, body {
     margin: 0;
     padding: 0;
     width: 100%;
-    height: 100%;
+    height: fit-content;
+    font-family: "Bitter", serif;
 }
 
-p {
-    margin: 0;
+h1 {
+    color: #7d8c99;
+}
+
+h2  {
+    color: #5b5f70;
+    font-size: 2em;
+}
+
+h3 {
+    color: #5b5f70;
+    font-size: 1.5em;
+}
+
+button {
+    user-select: none;  /* deprecate select letters */
+    outline: none;      /* delete border after click */
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+input {
+    outline: none;
 }
 
 main {
-    width: 100%;
     height: 100%;
+    width: 60%;
+    margin: 0 auto;
+    padding: 15px;
 }
 
-main .container {
-    width: 40%;
-    height: 100%;
-    margin: 0 auto;
-    background-color: red;
+/* ========================================= Weather button ====================================== */
+
+
+.weather-button {
+    border-radius: 100%;
+    width: 1.5em;
+    height: 1.5em;
+    border: none;
+    color: white;
+    font-size: 1.5em;
+    background-color: slategray;
+}
+
+.weather-button:hover {
+    background-color: #7d8c99;
+}
+
+/* ========================================= List of weather information ====================================== */
+
+.full-weather-information {
+    list-style: none;
+    padding-inline-start: 0;
+}
+
+.full-weather-information li {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px;
+    margin: 5px;
+    background-color: darkgray;
+    font-weight: bold;
+}
+
+.full-weather-information li .key {
+    padding: 5px;
+    color: white;
+}
+
+.full-weather-information li .value {
+    padding: 5px;
+    color: #e5dede;
+}
+
+
+/* ================================================ TOP ================================================ */
+
+
+main .top-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+main .top-container .refresh-geolocation {
+    background-color: #c9d2d7;
+    color: #585858;
+    border: 0;
+    border-radius: 5px;
+    font-size: 0.9em;
+    width: 15vw;
+    height: 5vh;
+    margin: auto;
+}
+
+main .top-container .refresh-geolocation:hover {
+    cursor: pointer;
+    background-color: #d6dee2;
+}
+
+main .main-city-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+main .main-city-container .brief-weather-information {
+
+}
+
+main .main-city-container .brief-weather-information .temperature-information {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+main .main-city-container .brief-weather-information .temperature-information .weather-icon {
+    width: 7vw;
+}
+
+main .main-city-container .brief-weather-information .temperature-information .temperature-number {
+    color: #5b5f70;
+    font-size: 5vw;
+}
+
+
+/* ================================================ TOOLS ================================================ */
+
+
+main .favorite-cities-container .tools-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: 20px;
+}
+
+main .favorite-cities-container .tools-container .add-favorite-city {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+main .favorite-cities-container .tools-container .add-favorite-city .add-city-field {
+    margin-right: 10px;
+    padding: 10px;
+    border: 0;
+    border-radius: 5px;
+    background-color: #ececec;
+}
+
+main .favorite-cities-container .tools-container .add-favorite-city .add-city-field::placeholder {
+    font-size: 0.9em;
+    font-style: italic;
+    padding-left: 5px;
+}
+
+main .favorite-cities-container .tools-container .add-favorite-city .add-city-button {
+
+}
+
+main .favorite-cities-container .tools-container .add-favorite-city .add-city-button:hover {
+
+}
+
+
+/* ================================================ FAVORITE CITIES ================================================ */
+
+
+main .favorite-cities-container .favorite-cities-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 20px;
+
+    margin: 0;
+    list-style: none;
+    padding-inline-start: 0;
+}
+
+main .favorite-cities-container .favorite-cities-list li .brief-weather-information {
+    display: flex;
+}
+
+main .favorite-cities-container .favorite-cities-list li .brief-weather-information .weather-icon {
+    width: 10%;
+}
+
+main .favorite-cities-container .favorite-cities-list li .brief-weather-information .remove-city-button {
+    padding: 0;
+    margin: 0;
+    width: 2em;
+    height: 2em;
+    font-size: 1em;
 }
