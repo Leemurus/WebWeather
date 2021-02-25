@@ -7,13 +7,13 @@ html, body {
 }
 
 h1 {
-    font-size: 2.5em;
+    font-size: 2.5vw;
     color: #7d8c99;
 }
 
 h2  {
     color: #5b5f70;
-    font-size: 2em;
+    font-size: 1.8vw;
 }
 
 h3 {
@@ -41,18 +41,20 @@ main {
     padding: 15px;
 }
 
+
 /* ========================================= Round button ====================================== */
 
 
 .round-button {
-    border-radius: 100%;
+    border-radius: 50%;
     width: 1.5em;
     height: 1.5em;
     border: none;
     color: white;
     font-size: 1.5em;
     background-color: slategray;
-
+    padding: 0.5em;
+    margin: 0;
 
     /* For cross sign inside */
     display: flex;
@@ -64,7 +66,9 @@ main {
     background-color: #7d8c99;
 }
 
+
 /* ========================================= List of weather information ====================================== */
+
 
 .full-weather-information {
     list-style: none;
@@ -138,9 +142,6 @@ main .main-city-container {
     grid-template-columns: repeat(2, 1fr);
 }
 
-main .main-city-container .brief-weather-information {
-
-}
 
 main .main-city-container .brief-weather-information .temperature-information {
     display: grid;
@@ -148,12 +149,12 @@ main .main-city-container .brief-weather-information .temperature-information {
 }
 
 main .main-city-container .brief-weather-information .temperature-information .weather-icon {
-    width: 8em;
+    width: 8vw;
 }
 
 main .main-city-container .brief-weather-information .temperature-information .temperature-number {
     color: #5b5f70;
-    font-size: 6em;
+    font-size: 5vw;
 }
 
 
@@ -186,6 +187,7 @@ main .favorite-cities-container .tools-container .add-favorite-city .add-city-fi
     padding-left: 5px;
 }
 
+
 /* ================================================ FAVORITE CITIES ================================================ */
 
 
@@ -204,7 +206,7 @@ main .favorite-cities-container .favorite-cities-list li .brief-weather-informat
     display: grid;
     align-items: center;
     justify-content: center;
-    grid-template-columns: 1fr 1fr 2fr 1fr;
+    grid-template-columns: 1fr 1fr 3fr 1fr;
 }
 
 main .favorite-cities-container .favorite-cities-list li .brief-weather-information .city-name {
@@ -213,12 +215,12 @@ main .favorite-cities-container .favorite-cities-list li .brief-weather-informat
 
 main .favorite-cities-container .favorite-cities-list li .brief-weather-information .temperature-number {
     color: #5b5f70;
-    padding-left: 1vw;
+    padding-left: 2vw;
     font-size: 2em;
 }
 
 main .favorite-cities-container .favorite-cities-list li .brief-weather-information .weather-icon {
-    padding-left: 1vw;
+    padding-left: 2vw;
     width: 2.5em;
 }
 
@@ -227,12 +229,22 @@ main .favorite-cities-container .favorite-cities-list li .brief-weather-informat
     justify-self: flex-end;
 }
 
+
 /* ================================================ Media requests ================================================ */
 
+
 @media (max-width: 1400px) {
+    h1 {
+        font-size: 5vw;
+    }
+
+    h2 {
+        font-size: 3vw;
+    }
+
     /* Refresh button */
     main .top-container {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 2fr 1fr;
         justify-content: flex-start;
     }
 
@@ -256,7 +268,7 @@ main .favorite-cities-container .favorite-cities-list li .brief-weather-informat
     /* Tools container */
     main .favorite-cities-container .tools-container {
         grid-template-columns: repeat(1, 1fr);
-        margin-bottom: 20px;
+        margin-bottom: 5vh;
     }
 
     main .favorite-cities-container .tools-container .add-city-field {
@@ -268,8 +280,40 @@ main .favorite-cities-container .favorite-cities-list li .brief-weather-informat
         grid-template-columns: repeat(1, 1fr);
     }
 
+    main .main-city-container .brief-weather-information .temperature-information .weather-icon {
+        width: 10vw;
+    }
+
+    main .main-city-container .brief-weather-information .temperature-information .temperature-number {
+        color: #5b5f70;
+        font-size: 8vw;
+    }
+
     /* Favorite cities container */
     main .favorite-cities-container .favorite-cities-list {
         grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    main {
+        width: 90%;
+    }
+
+    h1 {
+        font-size: 7vw;
+    }
+
+    h2 {
+        font-size: 5vw;
+    }
+
+    main .main-city-container .brief-weather-information .temperature-information .weather-icon {
+        width: 20vw;
+    }
+
+    main .main-city-container .brief-weather-information .temperature-information .temperature-number {
+        color: #5b5f70;
+        font-size: 17vw;
     }
 }
