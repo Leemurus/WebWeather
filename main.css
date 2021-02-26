@@ -14,6 +14,7 @@ h1 {
 h2  {
     color: #5b5f70;
     font-size: 1.8vw;
+    margin: 0;
 }
 
 h3 {
@@ -73,6 +74,7 @@ main {
 .full-weather-information {
     list-style: none;
     padding-inline-start: 0;
+    margin: 0;
 }
 
 .full-weather-information li {
@@ -140,8 +142,16 @@ main .main-city-container {
     grid-column-gap: 2vw;
     grid-row-gap: 2vh;
     grid-template-columns: repeat(2, 1fr);
+    margin-bottom: 1vh;
 }
 
+main .main-city-container .brief-weather-information {
+    align-items: center;
+}
+
+main .main-city-container .brief-weather-information h2 {
+    margin-bottom: 2vh;
+}
 
 main .main-city-container .brief-weather-information .temperature-information {
     display: grid;
