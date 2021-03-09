@@ -261,12 +261,12 @@ main .favorite-cities-container .favorite-cities-list li .brief-weather-informat
         width: 80%;
     }
 
-    h1 {
+    h1, .favorites-title {
         font-size: 5vw;
     }
 
     h2 {
-        font-size: 3vw;
+        font-size: 3.5vw;
     }
 
     /* Refresh button */
@@ -327,7 +327,7 @@ main .favorite-cities-container .favorite-cities-list li .brief-weather-informat
         width: 90%;
     }
 
-    h1 {
+    h1, .favorites-title {
         font-size: 7vw;
     }
 
