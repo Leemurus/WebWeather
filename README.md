@@ -1,3 +1,3 @@
-# St. Petersburg weather web page
+# Automatic weather web page by geolocation
 
-###  University web lab №1
+###  University web labs

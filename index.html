@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Weather in St. Petersburg</title>
     <link rel="shortcut icon" href="assets/favicon.png" type="image/png">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter">
 </head>
@@ -39,8 +39,8 @@
     <section class="favorite-cities-container">
         <div class="tools-container">
             <h2 class="favorites-title">Избранное</h2>
-            <form action="#" class="add-favorite-city">
-                <input type="text" class="add-city-field" placeholder="Добавить новый город">
+            <form name="add-favorite-city" class="add-favorite-city">
+                <input type="text" id="favorite-city-name" class="add-city-field" placeholder="Добавить новый город">
                 <button class="add-city-button round-button">+</button>
             </form>
         </div>
@@ -146,5 +146,7 @@
 </main>
 
 <script type="text/javascript" src="https://livejs.com/live.js"></script>
+<script type="text/javascript" src="js/weather.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
 </body>
 </html>

@@ -135,7 +135,7 @@ main .top-container .refresh-geolocation {
 
 main .top-container .refresh-geolocation .refresh-icon {
     display: none;
-    background-image: url("assets/refresh.svg");
+    background-image: url("../assets/refresh.svg");
     background-repeat: no-repeat;
     height: 2vw;
     width: 2vw;
