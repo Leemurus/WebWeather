@@ -12,10 +12,10 @@ function getWeatherByCoordinates(lat, lon) {
 }
 
 function getWeatherIcon(iconName) {
-    return `https://openweathermap.org/img/wn/${iconName}.png`
+    return `https://openweathermap.org/img/wn/${iconName}@4x.png`
 }
 
-function doRequest(url) {
+async function doRequest(url) {
     return fetch(url).then(response => {
         return response.json();
     }).catch(e => {

@@ -2,13 +2,12 @@ const favoriteCityForm = document.forms['add-favorite-city'];
 const refreshButton = document.getElementsByClassName('refresh-geolocation')[0];
 const favoriteCitiesList = document.getElementsByClassName('favorite-cities-list')[0];
 const currentCity = document.getElementsByClassName('main-city-container')[0];
-const myStorage = window.localStorage;
 
+//  ======================================== EVENTS ========================================
 
-// Events
 favoriteCityForm.addEventListener('submit', function (e) {
     const cityInput = document.getElementById('favorite-city-name');
-    addFavoriteCityToUI(cityInput.value);
+    addFavoriteCity(cityInput.value);
     cityInput.value = '';
     e.preventDefault();
 });
@@ -29,10 +28,12 @@ refreshButton.addEventListener('click', function () {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
+    initializeLocalStorage();
     setLoaderOnCurrentCity();
     loadCoordinatesFromGeolocationAPI();
     loadCitiesFromLocalStorage();
 });
+
 
 function loadCoordinatesFromGeolocationAPI() {
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -42,8 +43,8 @@ function loadCoordinatesFromGeolocationAPI() {
         });
     }, function (e) {
         updateCurrentCityInformation({
-            'latitude': 59.972257899999995,
-            'longitude': 23.303448999999997
+            'latitude': 59.957216,
+            'longitude': 30.308178
         });
         console.warn(`There has been a problem with access to geolocation: ` + e.message)
     });
@@ -58,34 +59,23 @@ async function updateCurrentCityInformation(coordinates) {
     unsetLoaderOnCurrentCity();
 }
 
-async function loadCitiesFromLocalStorage() {
-    const copiedStorage = {};
-    for (let key of Object.keys(myStorage)) {
-        copiedStorage[key] = myStorage.getItem(key);
-    }
-    myStorage.clear();
 
-    for (let key in copiedStorage) {
-        await addFavoriteCityToUI(key);
-    }
-}
+async function addFavoriteCity(cityName, fromStorage= false) {
+    const cityId = fromStorage ? myStorage.getItem(cityName) : generateNewCityId();
 
-async function addFavoriteCityToUI(cityName) {
-    const cityId = myStorage.length + 1;
     favoriteCitiesList.innerHTML += renderEmptyFavoriteCity(cityId);
-
     let weatherData = await getWeatherByCityName(cityName);
 
     if (weatherData['cod'] !== 200) {
         alert('City name is incorrect or information is missing.');
-        deleteFavoriteCityById(cityId);
-        return null;
+        deleteFavoriteCityByIdFromUI(cityId);
+        return;
     }
 
-    if (myStorage.getItem(weatherData['name']) !== null) {
+    if (myStorage.getItem(weatherData['name']) !== null && !fromStorage) {
         alert('You already have this city in favorites');
-        deleteFavoriteCityById(cityId);
-        return null;
+        deleteFavoriteCityByIdFromUI(cityId);
+        return;
     }
 
     myStorage.setItem(weatherData['name'], cityId);
@@ -96,9 +86,23 @@ async function addFavoriteCityToUI(cityName) {
 }
 
 function deleteFavoriteCityById(cityId) {
+    // We can't delete pair from storage by value - we need search the key
+    for (let key of getCityListFromStorage()) {
+        if (myStorage.getItem(key) === cityId) {
+            myStorage.removeItem(key);
+            break
+        }
+    }
+
+    deleteFavoriteCityByIdFromUI(cityId);
+}
+
+function deleteFavoriteCityByIdFromUI(cityId) {
     const cityObject = document.getElementById(`favorite_${cityId}`);
     cityObject.remove();
 }
+
+//  ======================================== RENDERING ========================================
 
 function renderCurrentCityBriefInformation(weatherData) {
     return `
@@ -144,6 +148,8 @@ function renderEmptyFavoriteCity(cityId) {
         </li>
     `
 }
+
+//  ======================================== LOADER ========================================
 
 function setLoaderOnCurrentCity() {
     if (!currentCity.classList.contains('loader-on')) {
