@@ -18,7 +18,7 @@ h1 {
     margin-block-end: 0.67em;
 }
 
-h2  {
+h2 {
     color: #5b5f70;
     font-size: 1.8vw;
     margin: 0;
@@ -30,8 +30,8 @@ h3 {
 }
 
 button {
-    user-select: none;  /* deprecate select letters */
-    outline: none;      /* delete border after click */
+    user-select: none; /* deprecate select letters */
+    outline: none; /* delete border after click */
 }
 
 button:hover {
@@ -135,7 +135,7 @@ main .top-container .refresh-geolocation {
 
 main .top-container .refresh-geolocation .refresh-icon {
     display: none;
-    background-image: url("../assets/refresh.svg");
+    background-image: url("../assets/loader.svg");
     background-repeat: no-repeat;
     height: 2vw;
     width: 2vw;
@@ -177,6 +177,9 @@ main .main-city-container .brief-weather-information .temperature-information .t
     font-size: 5vw;
 }
 
+/*main .main-city-container .full-weather-information {*/
+/*    display: none;*/
+/*}*/
 
 /* ================================================ TOOLS ================================================ */
 
@@ -342,5 +345,60 @@ main .favorite-cities-container .favorite-cities-list li .brief-weather-informat
     main .main-city-container .brief-weather-information .temperature-information .temperature-number {
         color: #5b5f70;
         font-size: 17vw;
+    }
+}
+
+
+/* ======================================== LOADER ====================================== */
+
+
+main .loader-on,
+main .favorite-cities-container .favorite-cities-list .loader-on {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    grid-column-gap: unset;
+    grid-row-gap: unset;
+    grid-template-columns: none;
+}
+
+main .loader-on .brief-weather-information,
+main .loader-on .full-weather-information,
+main .favorite-cities-container .favorite-cities-list .loader-on .brief-weather-information,
+main .favorite-cities-container .favorite-cities-list .loader-on .full-weather-information {
+    display: none;
+}
+
+.loader-on .city-loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.city-loader {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 10vh;
+
+    margin-bottom: 1vh;
+    min-width: 280px;
+}
+
+.city-loader .loader-icon {
+    background-image: url("../assets/loader.svg");
+    color: black;
+    background-repeat: no-repeat;
+    height: 2vw;
+    width: 2vw;
+    margin: 2vh;
+    animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
     }
 }

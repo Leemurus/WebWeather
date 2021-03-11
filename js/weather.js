@@ -1,19 +1,24 @@
 const API_KEY = 'b0555787759c4e8382148ae636958af2';
+const API_URL = 'https://api.openweathermap.org/data/2.5/weather';
 
 function getWeatherByCityName(cityName) {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}`;
+    const url = `${API_URL}?q=${cityName}&units=metric&appid=${API_KEY}`;
     return doRequest(url);
 }
 
-function getWeatherByGeolocation(lat, lon) {
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
+function getWeatherByCoordinates(lat, lon) {
+    const url = `${API_URL}?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`;
     return doRequest(url);
+}
+
+function getWeatherIcon(iconName) {
+    return `https://openweathermap.org/img/wn/${iconName}.png`
 }
 
 function doRequest(url) {
     return fetch(url).then(response => {
         return response.json();
     }).catch(e => {
-        console.log(`There has been a problem with your fetch operation for resource "${url}": ` + e.message)
+        console.warn(`There has been a problem with your fetch operation for resource "${url}": ` + e.message)
     });
 }
