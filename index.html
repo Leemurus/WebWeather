@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Weather</title>
-    <link rel="shortcut icon" href="assets/favicon.png" type="image/png">
+    <link id="favicon" rel="shortcut icon" href="assets/favicon.png" type="image/png">
     <link rel="stylesheet" href="css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter">
@@ -21,25 +21,25 @@
 
     <section class="main-city-container loader-on">
         <div class="brief-weather-information">
-            <h2>Saint Petersburg</h2>
+            <h2 class="city-name">Saint Petersburg</h2>
             <div class="temperature-information">
                 <img src="assets/favicon.png" class="weather-icon" alt="Иконка погоды">
                 <span class="temperature-number">8&deg;C</span>
             </div>
         </div>
+
         <ul class="full-weather-information">
-            <li><span class="key">Ветер</span> <span class="value">Moderate breeze, 6.0 m/s, North-northwest</span></li>
-            <li><span class="key">Облачность</span> <span class="value">Broken clouds</span></li>
-            <li><span class="key">Давление</span> <span class="value">1013 hpa</span></li>
-            <li><span class="key">Влажность</span> <span class="value">52%</span></li>
-            <li><span class="key">Координаты</span> <span class="value">[59.88, 30.42]</span></li>
+            <li class="wind"><span class="key">Ветер</span> <span class="value">Moderate breeze, 6.0 m/s, North-northwest</span></li>
+            <li class="cloudy"><span class="key">Облачность</span> <span class="value">Broken clouds</span></li>
+            <li class="pressure"><span class="key">Давление</span> <span class="value">1013 hpa</span></li>
+            <li class="humidity"><span class="key">Влажность</span> <span class="value">52%</span></li>
+            <li class="coordinates"><span class="key">Координаты</span> <span class="value">[59.88, 30.42]</span></li>
         </ul>
         <div class="city-loader">
             <span>Подождите, данные загружаются</span>
             <div class="loader-icon"></div>
         </div>
     </section>
-
 
     <section class="favorite-cities-container">
         <div class="tools-container">
@@ -50,11 +50,35 @@
             </form>
         </div>
 
-        <ul class="favorite-cities-list"></ul>
+        <ul class="favorite-cities-list">
+            <template id="favorite-city-template">
+                <li class="loader-on" id="1">
+                    <div class="brief-weather-information">
+                        <h3 class="city-name">Moscow</h3>
+                        <span class="temperature-number">8&deg;C</span>
+                        <img src="assets/favicon.png" class="weather-icon" alt="Иконка погоды">
+                        <button class="remove-city-button round-button">+</button>
+                    </div>
+
+                    <ul class="full-weather-information">
+                        <li class="wind"><span class="key">Ветер</span> <span class="value">Moderate breeze, 6.0 m/s, North-northwest</span></li>
+                        <li class="cloudy"><span class="key">Облачность</span> <span class="value">Broken clouds</span></li>
+                        <li class="pressure"><span class="key">Давление</span> <span class="value">1013 hpa</span></li>
+                        <li class="humidity"><span class="key">Влажность</span> <span class="value">52%</span></li>
+                        <li class="coordinates"><span class="key">Координаты</span> <span class="value">[59.88, 30.42]</span></li>
+                    </ul>
+
+                    <div class="city-loader">
+                        <span>Подождите, данные загружаются</span>
+                        <div class="loader-icon"></div>
+                    </div>
+                </li>
+            </template>
+        </ul>
     </section>
 </main>
 
-<script type="text/javascript" src="https://livejs.com/live.js"></script>
+<!--<script type="text/javascript" src="https://livejs.com/live.js"></script>-->
 <script type="text/javascript" src="js/weather.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
 <script type="text/javascript" src="js/storage.js"></script>

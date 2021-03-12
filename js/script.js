@@ -22,7 +22,6 @@ favoriteCitiesList.addEventListener('click', function (event) {
 });
 
 refreshButton.addEventListener('click', function () {
-    myStorage.clear();
     setLoaderOnCurrentCity();
     loadCoordinatesFromGeolocationAPI();
 });
@@ -34,6 +33,9 @@ document.addEventListener('DOMContentLoaded', function () {
     loadCitiesFromLocalStorage();
 });
 
+async function updateFavicon(weatherData) {
+    document.getElementById('favicon').href = getWeatherIcon(weatherData);
+}
 
 function loadCoordinatesFromGeolocationAPI() {
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -52,10 +54,9 @@ function loadCoordinatesFromGeolocationAPI() {
 
 async function updateCurrentCityInformation(coordinates) {
     let weatherData = await getWeatherByCoordinates(coordinates['latitude'], coordinates['longitude'])
-    currentCity.removeChild(currentCity.getElementsByClassName('brief-weather-information')[0]);
-    currentCity.innerHTML += renderCurrentCityBriefInformation(weatherData);
-    currentCity.removeChild(currentCity.getElementsByClassName('full-weather-information')[0]);
-    currentCity.innerHTML += renderFullWeatherInformation(weatherData);
+    updateFavicon(weatherData);
+    updateCurrentCityBriefInformation(weatherData);
+    updateFullWeatherInformation(currentCity, weatherData);
     unsetLoaderOnCurrentCity();
 }
 
@@ -63,7 +64,8 @@ async function updateCurrentCityInformation(coordinates) {
 async function addFavoriteCity(cityName, fromStorage= false) {
     const cityId = fromStorage ? myStorage.getItem(cityName) : generateNewCityId();
 
-    favoriteCitiesList.innerHTML += renderEmptyFavoriteCity(cityId);
+    const favoriteCityElement = renderEmptyFavoriteCity(cityId);
+    favoriteCitiesList.appendChild(favoriteCityElement);
     let weatherData = await getWeatherByCityName(cityName);
 
     if (weatherData['cod'] !== 200) {
@@ -79,9 +81,9 @@ async function addFavoriteCity(cityName, fromStorage= false) {
     }
 
     myStorage.setItem(weatherData['name'], cityId);
-    const cityObject = document.getElementById(`favorite_${cityId}`);
-    cityObject.innerHTML += renderFavoriteCityBriefInformation(weatherData);
-    cityObject.innerHTML += renderFullWeatherInformation(weatherData);
+
+    updateFavoriteCityBriefInformation(favoriteCityElement, weatherData);
+    updateFullWeatherInformation(favoriteCityElement, weatherData);
     unsetLoaderOnFavoriteCity(cityId);
 }
 
@@ -102,51 +104,35 @@ function deleteFavoriteCityByIdFromUI(cityId) {
     cityObject.remove();
 }
 
-//  ======================================== RENDERING ========================================
+//  ======================================== FRONTEND UPDATING ========================================
 
-function renderCurrentCityBriefInformation(weatherData) {
-    return `
-        <div class="brief-weather-information">
-            <h2>${weatherData['name']}</h2>
-            <div class="temperature-information">
-                <img src="${getWeatherIcon(weatherData['weather'][0]['icon'])}" class="weather-icon" alt="Иконка погоды">
-                <span class="temperature-number">${Math.round(weatherData['main']['temp_min'])}&deg;C</span>
-            </div>
-        </div>
-    `
+function updateCurrentCityBriefInformation(weatherData) {
+    currentCity.getElementsByClassName('city-name')[0].textContent = weatherData['name'];
+    currentCity.getElementsByClassName('weather-icon')[0].src = getWeatherIcon(weatherData);
+    currentCity.getElementsByClassName('temperature-number')[0].innerHTML = `${Math.round(weatherData['main']['temp_min'])} &deg;C`;
 }
 
-function renderFavoriteCityBriefInformation(weatherData) {
-    return `
-        <div class="brief-weather-information">
-            <h3 class="city-name">${weatherData['name']}</h3>
-            <span class="temperature-number">${Math.round(weatherData['main']['temp_min'])}&deg;C</span>
-            <img src="${getWeatherIcon(weatherData['weather'][0]['icon'])}" class="weather-icon" alt="Иконка погоды">
-            <button class="remove-city-button round-button">+</button>
-        </div>
-    `
+function updateFavoriteCityBriefInformation(favoriteCityElement, weatherData) {
+    const briefWeatherElement = favoriteCityElement.getElementsByClassName('brief-weather-information')[0];
+    briefWeatherElement.getElementsByClassName('city-name')[0].textContent = weatherData['name'];
+    briefWeatherElement.getElementsByClassName('temperature-number')[0].innerHTML = `${Math.round(weatherData['main']['temp_min'])} &deg;C`;
+    briefWeatherElement.getElementsByClassName('weather-icon')[0].src = getWeatherIcon(weatherData);
 }
 
-function renderFullWeatherInformation(weatherData) {
-    return `
-        <ul class="full-weather-information">
-            <li><span class="key">Ветер</span> <span class="value">${weatherData['wind']['speed']} m/s, ${weatherData['wind']['deg']}</span></li>
-            <li><span class="key">Облачность</span> <span class="value">${weatherData['weather'][0]['main']}</span></li>
-            <li><span class="key">Давление</span> <span class="value">${weatherData['main']['pressure']} hpa</span></li>
-            <li><span class="key">Влажность</span> <span class="value">${weatherData['main']['humidity']}%</span></li>
-            <li><span class="key">Координаты</span> <span class="value">[${weatherData['coord']['lat']}, ${weatherData['coord']['lon']}]</span></li>
-        </ul>`
+function updateFullWeatherInformation(favoriteCityElement, weatherData) {
+    const fullWeatherElement = favoriteCityElement.getElementsByClassName('full-weather-information')[0];
+    fullWeatherElement.getElementsByClassName('wind')[0].getElementsByClassName('value')[0].textContent = `${weatherData['wind']['speed']} m/s, ${weatherData['wind']['deg']} deg`;
+    fullWeatherElement.getElementsByClassName('cloudy')[0].getElementsByClassName('value')[0].textContent = weatherData['weather'][0]['main'];
+    fullWeatherElement.getElementsByClassName('pressure')[0].getElementsByClassName('value')[0].textContent = `${weatherData['main']['pressure']} hpa`;
+    fullWeatherElement.getElementsByClassName('humidity')[0].getElementsByClassName('value')[0].textContent = `${weatherData['main']['humidity']}%`;
+    fullWeatherElement.getElementsByClassName('coordinates')[0].getElementsByClassName('value')[0].textContent = `[${weatherData['coord']['lat']}, ${weatherData['coord']['lon']}]`;
 }
 
 function renderEmptyFavoriteCity(cityId) {
-    return `
-        <li class="loader-on" id="favorite_${cityId}">
-            <div class="city-loader">
-                <span>Подождите, данные загружаются</span>
-                <div class="loader-icon"></div>
-            </div>
-        </li>
-    `
+    const template = document.getElementById('favorite-city-template');
+    const favoriteCityElement = document.importNode(template.content.firstElementChild, true);
+    favoriteCityElement.id = `favorite_${cityId}`;
+    return favoriteCityElement;
 }
 
 //  ======================================== LOADER ========================================
