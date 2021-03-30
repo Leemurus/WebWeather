@@ -88,7 +88,7 @@ main {
     display: flex;
     justify-content: space-between;
     padding: 0.5vh;
-    margin: 1vh 0vh 1vh 0vh;
+    margin: 1vh 0 1vh 0;
     background-color: darkgray;
     font-weight: bold;
 }

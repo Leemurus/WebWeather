@@ -1,3 +1,3 @@
-# Automatic weather web page by geolocation
+# Weather website
 
-###  University web labs
+###  University web programming labs
