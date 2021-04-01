@@ -2,11 +2,11 @@
   "name": "webweather",
   "version": "1.0.0",
   "description": "Weather website",
-  "main": "index.js",
+  "main": "app/index.js",
   "type": "module",
   "scripts": {
-    "dev": "./start.sh && nodemon index.js",
-    "start": "node index.js"
+    "dev": "./start.sh && nodemon app/index.js",
+    "start": "./start.sh && node app/index.js"
   },
   "repository": {
     "type": "git",
@@ -24,8 +24,11 @@
     "nodemon": "^2.0.7"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
-    "mysql": "^2.18.1"
+    "morgan": "^1.10.0",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.6.2"
   }
 }

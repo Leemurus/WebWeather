@@ -1,13 +1,12 @@
-const API_KEY = 'b0555787759c4e8382148ae636958af2';
-const API_URL = 'https://api.openweathermap.org/data/2.5/weather';
+const BASE_URL = window.location.origin;
 
 function getWeatherByCityName(cityName) {
-    const url = `${API_URL}?q=${cityName}&units=metric&appid=${API_KEY}`;
+    const url = `${BASE_URL}/weather/city?q=${cityName}`;
     return doRequest(url);
 }
 
 function getWeatherByCoordinates(lat, lon) {
-    const url = `${API_URL}?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`;
+    const url = `${BASE_URL}/weather/coordinates/?lat=${lat}&lon=${lon}`;
     return doRequest(url);
 }
 
