@@ -12,7 +12,7 @@ const doRequestToWebWeather = async (url) => {
 }
 
 router.get('/weather/city', async (req, res) => {
-    const cityName = req.query.q
+    const cityName = encodeURI(req.query.q)
 
     if (!cityName) {
         res.sendStatus(400)
@@ -62,21 +62,23 @@ router.post('/favorites', async (req, res) => {
         return
     }
 
+    let cityId = null
     try {
         await Favorites.create({city: cityName})
+        cityId = (await Favorites.findOne({where: {city: cityName}})).dataValues.id
     } catch (e) {
         console.error("Can't add new city to the database: ", e)
         res.sendStatus(500)
         return
     }
 
-    res.sendStatus(200)
+    res.json(cityId)
 })
 
 router.delete('/favorites', async (req, res) => {
-    const cityName = req.body.city
+    const cityId = req.body.cityId
 
-    if (!cityName) {
+    if (!cityId) {
         res.sendStatus(400)
         return
     }
@@ -84,7 +86,7 @@ router.delete('/favorites', async (req, res) => {
     try {
         await Favorites.destroy({
             where: {
-                city: cityName
+                id: cityId
             }
         })
     } catch (e) {

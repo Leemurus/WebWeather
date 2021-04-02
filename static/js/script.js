@@ -7,30 +7,34 @@ const currentCity = document.getElementsByClassName('main-city-container')[0];
 
 favoriteCityForm.addEventListener('submit', function (e) {
     const cityInput = document.getElementById('favorite-city-name');
-    addFavoriteCity(cityInput.value);
+    addFavoriteCity(cityInput.value, false);
     cityInput.value = '';
     e.preventDefault();
 });
 
-favoriteCitiesList.addEventListener('click', function (event) {
+favoriteCitiesList.addEventListener('click', async function (event) {
     if (!event.target.className.includes('remove-city-button')) {
         return;
     }
 
+    changeRemoveButtonState(event.target.closest('li'), true);
     const cityId = event.target.closest('li').id.split('_')[1];
-    deleteFavoriteCityById(cityId);
+    const isRemoved = await deleteFavoriteCityById(cityId);
+    if (!isRemoved) {
+        changeRemoveButtonState(event.target.closest('li'), false);
+    }
 });
 
 refreshButton.addEventListener('click', function () {
+    unsetNoConnectionOnCurrentCity();
     setLoaderOnCurrentCity();
     loadCoordinatesFromGeolocationAPI();
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-    initializeLocalStorage();
     setLoaderOnCurrentCity();
     loadCoordinatesFromGeolocationAPI();
-    loadCitiesFromLocalStorage();
+    loadFavorites();
 });
 
 async function updateFavicon(weatherData) {
@@ -54,49 +58,65 @@ function loadCoordinatesFromGeolocationAPI() {
 
 async function updateCurrentCityInformation(coordinates) {
     let weatherData = await getWeatherByCoordinates(coordinates['latitude'], coordinates['longitude'])
-    updateFavicon(weatherData);
-    updateCurrentCityBriefInformation(weatherData);
-    updateFullWeatherInformation(currentCity, weatherData);
-    unsetLoaderOnCurrentCity();
+
+    if (!weatherData && !navigator.onLine) {
+        unsetLoaderOnCurrentCity();
+        setNoConnectionOnCurrentCity();
+    } else {
+        updateFavicon(weatherData);
+        updateCurrentCityBriefInformation(weatherData);
+        updateFullWeatherInformation(currentCity, weatherData);
+        unsetLoaderOnCurrentCity();
+    }
 }
 
 
-async function addFavoriteCity(cityName, fromStorage= false) {
-    const cityId = fromStorage ? myStorage.getItem(cityName) : generateNewCityId();
-
-    const favoriteCityElement = renderEmptyFavoriteCity(cityId);
+async function addFavoriteCity(cityName, fromDatabase) {
+    const favoriteCityElement = renderEmptyFavoriteCity();
     favoriteCitiesList.appendChild(favoriteCityElement);
     let weatherData = await getWeatherByCityName(cityName);
 
-    if (weatherData['cod'] !== 200) {
+    if (!weatherData && !navigator.onLine) {
+        alert('Your internet connection was broken.');
+        favoriteCityElement.remove()
+        return;
+    }
+
+    if (!weatherData) {
         alert('City name is incorrect or information is missing.');
-        deleteFavoriteCityByIdFromUI(cityId);
+        favoriteCityElement.remove()
         return;
     }
 
-    if (myStorage.getItem(weatherData['name']) !== null && !fromStorage) {
+    let cityId = null;
+    if (!fromDatabase) {
+        cityId = await addCityToFavorites(weatherData['name'])
+    } else {
+        cityId = await getCityIdByCityName(weatherData['name'])
+    }
+
+    if (cityId == null) {
         alert('You already have this city in favorites');
-        deleteFavoriteCityByIdFromUI(cityId);
+        favoriteCityElement.remove()
         return;
     }
 
-    myStorage.setItem(weatherData['name'], cityId);
-
+    favoriteCityElement.id = `favorite_${cityId}`;
     updateFavoriteCityBriefInformation(favoriteCityElement, weatherData);
     updateFullWeatherInformation(favoriteCityElement, weatherData);
     unsetLoaderOnFavoriteCity(cityId);
 }
 
-function deleteFavoriteCityById(cityId) {
-    // We can't delete pair from storage by value - we need search the key
-    for (let key of getCityListFromStorage()) {
-        if (myStorage.getItem(key) === cityId) {
-            myStorage.removeItem(key);
-            break
-        }
+async function deleteFavoriteCityById(cityId) {
+    await deleteCityFromFavorites(cityId);
+
+    if(!navigator.onLine) {
+        alert('Your internet connection was broken.');
+        return false;
     }
 
     deleteFavoriteCityByIdFromUI(cityId);
+    return true
 }
 
 function deleteFavoriteCityByIdFromUI(cityId) {
@@ -128,14 +148,22 @@ function updateFullWeatherInformation(favoriteCityElement, weatherData) {
     fullWeatherElement.getElementsByClassName('coordinates')[0].getElementsByClassName('value')[0].textContent = `[${weatherData['coord']['lat']}, ${weatherData['coord']['lon']}]`;
 }
 
-function renderEmptyFavoriteCity(cityId) {
+function renderEmptyFavoriteCity() {
     const template = document.getElementById('favorite-city-template');
-    const favoriteCityElement = document.importNode(template.content.firstElementChild, true);
-    favoriteCityElement.id = `favorite_${cityId}`;
-    return favoriteCityElement;
+    return document.importNode(template.content.firstElementChild, true);
 }
 
 //  ======================================== LOADER ========================================
+
+function setNoConnectionOnCurrentCity() {
+    if (!currentCity.classList.contains('connection_lost')) {
+        currentCity.classList.add('connection_lost');
+    }
+}
+
+function unsetNoConnectionOnCurrentCity() {
+    currentCity.classList.remove('connection_lost');
+}
 
 function setLoaderOnCurrentCity() {
     if (!currentCity.classList.contains('loader-on')) {
@@ -145,6 +173,10 @@ function setLoaderOnCurrentCity() {
 
 function unsetLoaderOnCurrentCity() {
     currentCity.classList.remove('loader-on');
+}
+
+function changeRemoveButtonState(favoriteCityElement, state) {
+    favoriteCityElement.getElementsByClassName('remove-city-button')[0].disabled = state;
 }
 
 function unsetLoaderOnFavoriteCity(cityId) {

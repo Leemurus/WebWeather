@@ -13,6 +13,7 @@ app.set('views', path.resolve(__dirname, 'templates'))
 
 // Set middlewares
 app.use(express.static(path.resolve(__dirname, 'static')))
+app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(morgan('combined'))
 app.use(serverRoutes)

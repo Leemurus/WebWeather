@@ -405,3 +405,45 @@ main .favorite-cities-container .favorite-cities-list .loader-on .full-weather-i
         transform: rotate(360deg);
     }
 }
+
+/* ======================================== No connection ====================================== */
+
+main .connection_lost .brief-weather-information,
+main .connection_lost .full-weather-information {
+    display: none;
+}
+
+main .connection_lost {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    grid-column-gap: unset;
+    grid-row-gap: unset;
+    grid-template-columns: none;
+}
+
+.connection_lost .no-connection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.no-connection {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 15vh;
+
+    margin-bottom: 1vh;
+    min-width: 300px;
+}
+
+.no-connection .no-connection-icon {
+    justify-content: center;
+    align-items: center;
+    height: 6vh;
+    width: 6vh;
+    margin: 2vh;
+}
