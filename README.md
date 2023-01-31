@@ -15,4 +15,4 @@
 ![img.png](docs/adaptive.png)
 
 ### Loading
-![img.png](docs/img.png)
+![img.png](docs/loading.png)
